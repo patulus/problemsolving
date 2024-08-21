@@ -3,9 +3,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @problemWebsite  acmipc.net
@@ -26,7 +26,8 @@ public class Main {
         int M = Integer.parseInt(userInput[1]); // M개를 고른 수열을 모두 구하라
 
         int[] nums = new int[N];
-        List<String> history = new ArrayList<>();
+        // 삽입 순서 유지, 동일 요소 무시(HashMap의 key를 이용)
+        Set<String> history = new LinkedHashSet<>();
         int[] subHistory = new int[M];
         boolean[] visited = new boolean[N];
 
@@ -34,31 +35,28 @@ public class Main {
         for (i = 0; i < N; i++) {
             nums[i] = Integer.parseInt(userInput[i]);
         }
+
         Arrays.sort(nums);
 
         dfs(sb, nums, visited, M, history, subHistory, 0);
 
-        for (i = 0; i < history.size(); i++) {
-            bw.write(history.get(i));
+        for (String e : history) {
+            sb.append(e);
         }
+        bw.write(sb.toString());
         bw.flush();
 
         bw.close();
         br.close();
     }
 
-    private static void dfs(StringBuilder sb, int[] nums, boolean[] visited, int M, List<String> history, int[] subHistory, int depth) {
+    private static void dfs(StringBuilder sb, int[] nums, boolean[] visited, int M, Set<String> history, int[] subHistory, int depth) {
         if (depth == M) {
             for (int num : subHistory) {
                 sb.append(num).append(" ");
             }
             sb.append("\n");
-
-            String str = sb.toString();
-            if (!history.contains(str)) {
-                history.add(str);
-            };
-
+            history.add(sb.toString());
             sb.delete(0, sb.length());
 
             return;
