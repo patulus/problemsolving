@@ -20,9 +20,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
 
-        int i, j, k;
+        int i;
         String[] userInput;
 
         int n = Integer.parseInt(br.readLine()); // 도시의 개수
@@ -56,13 +55,13 @@ public class Main {
         calcMinRoute(routes, distances, minRoute, start);
 
         // 스페셜 저지가 붙은 문제는 예제 출력 외에도 다른 출력이 있을 수 있음
-        chkMinRoute(sb2, minRoute, start, end);
+        List<Integer> res = new ArrayList<>();
+        chkMinRoute(res, minRoute, start, end);
 
-        String[] res = sb2.toString().split(" ");
         sb.append(distances[end]).append("\n");
-        sb.append(res.length).append("\n");
-        for (i = res.length - 1; i >= 0; i--) {
-            sb.append(res[i]).append(" ");
+        sb.append(res.size()).append("\n");
+        for (i = 0; i < res.size(); i++) {
+            sb.append(res.get(i)).append(" ");
         }
         sb.append("\n");
 
@@ -98,14 +97,15 @@ public class Main {
         }
     }
 
-    static void chkMinRoute(StringBuilder sb, int[] minRoute, int start, int end) {
+//    static void chkMinRoute(StringBuilder sb, int[] minRoute, int start, int end) {
+    static void chkMinRoute(List<Integer> res, int[] minRoute, int start, int end) {
+        res.add(0, end + 1);
+
         if (end == start) {
-            sb.append(end + 1);
             return;
         }
 
-        sb.append(end + 1).append(" ");
-        chkMinRoute(sb, minRoute, start, minRoute[end]);
+        chkMinRoute(res, minRoute, start, minRoute[end]);
     }
 
     static class Route implements Comparable<Route> {
