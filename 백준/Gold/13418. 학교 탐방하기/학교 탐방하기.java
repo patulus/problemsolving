@@ -106,16 +106,6 @@ class Road implements Comparable<Road> {
     
     @Override
     public int compareTo(Road o) {
-        int diffWeight = this.weight - o.weight;
-        int diffStart = this.start - o.start;
-        int diffEnd = this.end - o.end;
-        
-        if (diffWeight != 0) {
-            return diffWeight;
-        } else if (diffStart != 0) {
-            return diffStart;
-        }
-        
-        return diffEnd;
+        return this.weight - o.weight;
     }
 }
