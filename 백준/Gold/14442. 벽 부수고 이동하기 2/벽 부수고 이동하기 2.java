@@ -11,6 +11,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+        String token;
         String[] tokens;
         tokens = br.readLine().split(" ");
         int N = Integer.parseInt(tokens[0]);
@@ -20,12 +21,9 @@ public class Main {
         int[][] map = new int[N][M];
         int[][][] dist = new int[N][M][K + 1];
         for (int n = 0; n < N; ++n) {
-            tokens = br.readLine().split("");
+            token = br.readLine();
             for (int m = 0; m < M; ++m) {
-                map[n][m] = Integer.parseInt(tokens[m]);
-                for (int k = 0; k < K + 1; ++k) {
-                    dist[n][m][k] = -1;
-                }
+                map[n][m] = token.charAt(m) - '0';
             }
         }
         dist[0][0][0] = 1;
@@ -76,7 +74,7 @@ public class Main {
                     nk = k + 1;
                 }
 
-                if (dist[ny][nx][nk] != -1) {
+                if (dist[ny][nx][nk] != 0) {
                     continue;
                 }
 
